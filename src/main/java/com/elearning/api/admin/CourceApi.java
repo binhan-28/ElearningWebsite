@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.elearning.entities.Course;
 import com.elearning.entities.Grammar;
 import com.elearning.service.CourseService;
 
+@CrossOrigin
 @RestController
 
 @RequestMapping("/api/admin/course")
@@ -34,8 +36,10 @@ public class CourceApi {
 		List<Course> list = courseService.getAllCourse();
 		List<String> response = new ArrayList<String>();
 		for (int i = 0; i < list.size(); i++) {
-			String json = "courseId===" + list.get(i).getCourseId() + "|@|" + "courseName===" + list.get(i).getCourseName()
-					+ "|@|" + "targetuser===" + list.get(i).getTargetUser() + "|@|" + "content===" + list.get(i).getContent();
+			String json = "courseId===" + list.get(i).getCourseId() + "|@|" + "courseName==="
+					+ list.get(i).getCourseName()
+					+ "|@|" + "targetuser===" + list.get(i).getTargetUser() + "|@|" + "content==="
+					+ list.get(i).getContent();
 			response.add(json);
 		}
 		return response;

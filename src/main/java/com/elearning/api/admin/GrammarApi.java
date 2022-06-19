@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.elearning.helper.ApiRes;
 import com.elearning.request.BaseReq;
 import com.elearning.service.GrammarService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/admin/grammar")
 public class GrammarApi {
@@ -155,7 +157,7 @@ public class GrammarApi {
 			System.out.println("ErrorAddGrammar:" + e);
 
 		}
-		
+
 		return response;
 	}
 

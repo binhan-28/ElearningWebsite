@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ import com.elearning.service.GrammarService;
 import com.elearning.service.NguoiDungService;
 import com.elearning.entities.Role;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/comment/grammar")
 @SessionAttributes("loggedInUser")
@@ -45,10 +47,10 @@ public class CommentGrammarApi {
 
 	@Autowired
 	CommentGrammarService commentGrammarService;
-	
+
 	@Autowired
 	GrammarService grammarService;
-	
+
 	@Autowired
 	NguoiDungRepository nguoidungRepository;
 
@@ -78,85 +80,89 @@ public class CommentGrammarApi {
 			return nguoiDungService.findByEmail(auth.getName());
 		}
 	}
-	
+
 	public NguoiDung getSessionUser(HttpServletRequest request) {
 		NguoiDung nguoiDung = (NguoiDung) request.getSession().getAttribute("loggedInUser");
 		return nguoiDung;
 	}
 
 	@PostMapping("/add/{contentComment}/{grammarId}")
-	public ResponseEntity<Object> add(@RequestBody CommentGrammar commentGrammar, HttpServletRequest request, @PathVariable("contentComment") String contentComment, 
+	public ResponseEntity<Object> add(@RequestBody CommentGrammar commentGrammar, HttpServletRequest request,
+			@PathVariable("contentComment") String contentComment,
 			@PathVariable("grammarId") Integer grammarId) {
-//		NguoiDung nguoiDung = getSessionUser(request);
-		NguoiDung nguoiDung= this.nguoidungRepository.getById((long) 2);
+		// NguoiDung nguoiDung = getSessionUser(request);
+		NguoiDung nguoiDung = this.nguoidungRepository.getById((long) 2);
 
 		Grammar grammar = grammarService.getInfor(grammarId);
-		
+
 		Date time = new Date();
-		
+
 		System.out.println("listcomment: " + nguoiDung);
-		
+
 		commentGrammar.setUserName(nguoiDung.getHoTen());
 		commentGrammar.setGrammar(grammar);
 		commentGrammar.setCommentDate(time);
 		commentGrammar.setContent(contentComment);
-		
+
 		return ResponseEntity.ok(commentGrammarService.save(commentGrammar));
 	}
+
 	@PostMapping("/add-comment")
 	public ResponseEntity<Object> addComment(@RequestBody GrammarCommentReq newComment, HttpServletRequest request) {
-// 		try {
-// 			nguoiDung = getSessionUser(request);
-// 		}catch(Exception ex) {
-// 			nguoiDung.setVaiTro(Role.ROLE_MEMBER);
-// //			ex.printStackTrace();
-// 		}
+		// try {
+		// nguoiDung = getSessionUser(request);
+		// }catch(Exception ex) {
+		// nguoiDung.setVaiTro(Role.ROLE_MEMBER);
+		// // ex.printStackTrace();
+		// }
 		NguoiDung nguoiDung = getSessionUser(request);
-//		NguoiDung nguoiDung= this.nguoidungRepository.getById((long) 2);
+		// NguoiDung nguoiDung= this.nguoidungRepository.getById((long) 2);
 
 		Grammar grammar = new Grammar();
-		grammar.setGrammarId(newComment.getGrammarId()); 
+		grammar.setGrammarId(newComment.getGrammarId());
 		CommentGrammar comment = new CommentGrammar();
 		Date time = new Date();
-//		String content = cmtdto.getContent();
-//		try {
-//			
-//			commentGrammar.setUserName(nguoiDung.getHoTen());
-////			CommentGrammar comment = this.commentGrammarService.save(content);
-//			return ResponseEntity.ok(commentGrammarService.save(commentGrammar));
-//		}catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		
-//		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		// String content = cmtdto.getContent();
+		// try {
+		//
+		// commentGrammar.setUserName(nguoiDung.getHoTen());
+		//// CommentGrammar comment = this.commentGrammarService.save(content);
+		// return ResponseEntity.ok(commentGrammarService.save(commentGrammar));
+		// }catch (Exception ex) {
+		// ex.printStackTrace();
+		// }
+		//
+		// return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		comment.setUserName(nguoiDung.getHoTen());
 		comment.setCommentDate(time);
 		comment.setContent(newComment.getContent());
 		comment.setGrammar(grammar);
-		
-		return ResponseEntity.ok(commentGrammarService.save(comment));	
+
+		return ResponseEntity.ok(commentGrammarService.save(comment));
 	}
-// 	@PostMapping("/add-comment")
-// 	public ResponseObject addComment(@RequestBody @Valid CommentGrammar newComment, BindingResult result, HttpServletRequest request) {
-		
-// //		NguoiDung nguoiDung = getSessionUser(request);
-// 		NguoiDung nguoiDung= this.nguoidungRepository.getById((long) 2);
-				
-// 		ResponseObject ro = new ResponseObject();
-		
-// 		if(result.hasErrors()) {
-// 			Map<String, String> errors = result.getFieldErrors().stream()
-// 					.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-// 			ro.setErrorMessages(errors);
-// 			ro.setStatus("fail");
-// 		}else {
-// 			newComment.setUserName(nguoiDung.getHoTen());
-// 			commentGrammarService.save(newComment);
-// 			ro.setData(newComment);
-// 			ro.setStatus("success");
-// 		}
-// 		System.out.println("id comment: "+ newComment.getId());
-// 		System.out.println("comment: "+ ro.getData());
-// 		return ro;
-// 	}
+	// @PostMapping("/add-comment")
+	// public ResponseObject addComment(@RequestBody @Valid CommentGrammar
+	// newComment, BindingResult result, HttpServletRequest request) {
+
+	// // NguoiDung nguoiDung = getSessionUser(request);
+	// NguoiDung nguoiDung= this.nguoidungRepository.getById((long) 2);
+
+	// ResponseObject ro = new ResponseObject();
+
+	// if(result.hasErrors()) {
+	// Map<String, String> errors = result.getFieldErrors().stream()
+	// .collect(Collectors.toMap(FieldError::getField,
+	// FieldError::getDefaultMessage));
+	// ro.setErrorMessages(errors);
+	// ro.setStatus("fail");
+	// }else {
+	// newComment.setUserName(nguoiDung.getHoTen());
+	// commentGrammarService.save(newComment);
+	// ro.setData(newComment);
+	// ro.setStatus("success");
+	// }
+	// System.out.println("id comment: "+ newComment.getId());
+	// System.out.println("comment: "+ ro.getData());
+	// return ro;
+	// }
 }

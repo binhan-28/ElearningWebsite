@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import com.elearning.service.GrammarService;
 /*import com.elearning.service.CommentGrammarService;*/
 import com.elearning.service.NguoiDungService;
 
+@CrossOrigin
 @Controller
 public class grammarController {
 	@Autowired
@@ -47,9 +49,9 @@ public class grammarController {
 	@GetMapping("/listGrammar")
 	public String getPage(@RequestParam(defaultValue = "1") int page, Model model) {
 
-//		List<BaiGrammar> list = baigrammarService.getAllBaiGrammar();
-//
-//		model.addAttribute("listData", list);
+		// List<BaiGrammar> list = baigrammarService.getAllBaiGrammar();
+		//
+		// model.addAttribute("listData", list);
 
 		// default value lấy từ kết quả đầu tiên
 

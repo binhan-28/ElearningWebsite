@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import com.elearning.helper.ApiRes;
 import com.elearning.request.BaseReq;
 import com.elearning.service.PostService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/admin/post")
 public class PostsApi {

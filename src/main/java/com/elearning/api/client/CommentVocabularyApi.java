@@ -15,6 +15,7 @@ import com.elearning.service.VocabularyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,24 +29,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/comment/vocab")
 @SessionAttributes("loggedInUser")
 public class CommentVocabularyApi {
-    @Autowired
-    CommentVocabService commentVocabService;
-    
-    @Autowired
-    VocabularyService vocabService;
-    
-    @Autowired
-    NguoiDungRepository nguoidungRepo;
-    
-    @Autowired
-    NguoiDungService nguoidungService;
-    
-    @GetMapping("/id={vocabId}")
+	@Autowired
+	CommentVocabService commentVocabService;
+
+	@Autowired
+	VocabularyService vocabService;
+
+	@Autowired
+	NguoiDungRepository nguoidungRepo;
+
+	@Autowired
+	NguoiDungService nguoidungService;
+
+	@GetMapping("/id={vocabId}")
 	public ResponseEntity<Object> getListCommentVocabId(
 			@PathVariable Integer vocabId) {
 
@@ -68,43 +69,44 @@ public class CommentVocabularyApi {
 			return nguoidungService.findByEmail(auth.getName());
 		}
 	}
-	
+
 	public NguoiDung getSessionUser(HttpServletRequest request) {
 		NguoiDung nguoiDung = (NguoiDung) request.getSession().getAttribute("loggedInUser");
 		return nguoiDung;
 	}
+
 	@PostMapping("/add-comment")
 	public ResponseEntity<Object> addComment(@RequestBody VocabCommentReq newComment, HttpServletRequest request) {
-// 		try {
-// 			nguoiDung = getSessionUser(request);
-// 		}catch(Exception ex) {
-// 			nguoiDung.setVaiTro(Role.ROLE_MEMBER);
-// //			ex.printStackTrace();
-// 		}
+		// try {
+		// nguoiDung = getSessionUser(request);
+		// }catch(Exception ex) {
+		// nguoiDung.setVaiTro(Role.ROLE_MEMBER);
+		// // ex.printStackTrace();
+		// }
 		NguoiDung nguoiDung = getSessionUser(request);
 		// NguoiDung nguoiDung= this.nguoidungRepo.getById((long) 2);
 
 		Vocabulary vocab = new Vocabulary();
-		vocab.setVocabularyId(newComment.getVocabularyId()); 
+		vocab.setVocabularyId(newComment.getVocabularyId());
 		CommentVocabulary comment = new CommentVocabulary();
 		Date time = new Date();
-//		String content = cmtdto.getContent();
-//		try {
-//			
-//			commentvocab.setUserName(nguoiDung.getHoTen());
-////			Commentvocab comment = this.commentvocabService.save(content);
-//			return ResponseEntity.ok(commentvocabService.save(commentvocab));
-//		}catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		
-//		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		// String content = cmtdto.getContent();
+		// try {
+		//
+		// commentvocab.setUserName(nguoiDung.getHoTen());
+		//// Commentvocab comment = this.commentvocabService.save(content);
+		// return ResponseEntity.ok(commentvocabService.save(commentvocab));
+		// }catch (Exception ex) {
+		// ex.printStackTrace();
+		// }
+		//
+		// return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		comment.setUserName(nguoiDung.getHoTen());
 		comment.setCommentDateVocab(time);
 		comment.setContentVocabulary(newComment.getContentVocabulary());
 		comment.setVocabulary(vocab);
-		
-        System.out.println("comment new: " + comment);
-		return ResponseEntity.ok(commentVocabService.save(comment));	
+
+		System.out.println("comment new: " + comment);
+		return ResponseEntity.ok(commentVocabService.save(comment));
 	}
 }
