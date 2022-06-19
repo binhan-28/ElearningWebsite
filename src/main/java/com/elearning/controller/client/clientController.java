@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +47,7 @@ import com.elearning.repository.CourseRepository;
 import com.elearning.repository.GrammarQuestionRepository;
 import com.elearning.dto.*;
 
+@CrossOrigin
 @Controller
 @SessionAttributes("loggedInUser")
 public class clientController {
@@ -111,7 +113,7 @@ public class clientController {
 		currentUser.setSoDienThoai(user.getSoDienThoai());
 		nguoiDungService.updateUser(currentUser);
 		return "redirect:/profile";
-//        return "redirect:/client/updateProfile";
+		// return "redirect:/client/updateProfile";
 	}
 
 	@GetMapping("/testlogs")

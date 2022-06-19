@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import com.elearning.request.BaseReq;
 import com.elearning.service.TestLogService;
 
 @Controller
-
+@CrossOrigin
 @RequestMapping("api/testlogs")
 public class TestLogsApi {
 	@Autowired

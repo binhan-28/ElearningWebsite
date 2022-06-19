@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import com.elearning.entities.VocabularyContent;
 import com.elearning.service.VocabularyService;
 import com.elearning.service.VocabularyDetailService;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/admin")
 public class QuanLyVocabController {

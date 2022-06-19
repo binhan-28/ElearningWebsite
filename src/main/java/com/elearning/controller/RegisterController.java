@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.elearning.service.NguoiDungService;
 import com.elearning.service.SecurityService;
 import com.elearning.validator.NguoiDungValidator;
 
+@CrossOrigin
 @Controller
 public class RegisterController {
 
@@ -48,7 +50,8 @@ public class RegisterController {
 		System.out.println("ok2");
 		nguoiDung.setVaiTro(Role.ROLE_MEMBER);
 		nguoiDungService.saveUser(nguoiDung);
-		//securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());
+		// securityService.autologin(nguoiDung.getEmail(),
+		// nguoiDung.getConfirmPassword());
 		System.out.println("ok3");
 		return "redirect:/";
 	}

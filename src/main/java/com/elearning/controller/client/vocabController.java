@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,23 +31,24 @@ import com.elearning.service.VocabularyService;
 import com.elearning.service.NguoiDungService;
 import com.elearning.service.VocabularyDetailService;
 
+@CrossOrigin
 @Controller
 public class vocabController {
-	@Autowired
-	VocabularyService vocabularyService;
-	
-	@Autowired
+    @Autowired
+    VocabularyService vocabularyService;
+
+    @Autowired
     VocabularyDetailService detailvocabulary;
 
-	@Autowired
-	private NguoiDungService nguoiDungService;
+    @Autowired
+    private NguoiDungService nguoiDungService;
 
-	@ModelAttribute("loggedInUser")
-	public NguoiDung getSessionUser(HttpServletRequest request) {
-		return (NguoiDung) request.getSession().getAttribute("loggedInUser");
-	}
+    @ModelAttribute("loggedInUser")
+    public NguoiDung getSessionUser(HttpServletRequest request) {
+        return (NguoiDung) request.getSession().getAttribute("loggedInUser");
+    }
 
-	@GetMapping("/listVocab")
+    @GetMapping("/listVocab")
     public String getPage(@RequestParam(defaultValue = "1") int page, Model model) {
 
         // default value lấy từ kết quả đầu tiên
@@ -76,9 +78,9 @@ public class vocabController {
             Collections.sort(pagelist);
         }
         model.addAttribute("pageList", pagelist);
-		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("listData", list.getContent());
-		model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("listData", list.getContent());
+        model.addAttribute("currentPage", page);
 
         return "client/listVocab";
     }
@@ -86,26 +88,27 @@ public class vocabController {
     @GetMapping("/detailVocab")
     public String DetalVocab(@RequestParam int idVocab, Model model) {
 
-    	Optional<Vocabulary> vocab = vocabularyService.getVocabularyById(idVocab);
+        Optional<Vocabulary> vocab = vocabularyService.getVocabularyById(idVocab);
 
         List<VocabularyContent> list = detailvocabulary.getListVocabulary(vocab.get());
 
         List<Vocabulary> baitaptuvung = vocabularyService.getVocabulary(idVocab);
-//        List<CommentTuVung> listCmt = cmttuvungService.findByBaiTapTuVung(baitaptuvung.get(0));
+        // List<CommentTuVung> listCmt =
+        // cmttuvungService.findByBaiTapTuVung(baitaptuvung.get(0));
 
-//        model.addAttribute("listcomment", listCmt);
+        // model.addAttribute("listcomment", listCmt);
         model.addAttribute("vocabularyid", list.get(0).getVocabulary().getVocabularyId());
         model.addAttribute("vocab", vocab.get());
         model.addAttribute("listCauHoi", list);
-        
-//        model.addAttribute("countCmt", listCmt.size());
+
+        // model.addAttribute("countCmt", listCmt.size());
         return "client/VocabDetail";
 
     }
 
     @RequestMapping(value = "/searchVocab/{search}", method = RequestMethod.POST)
     public String searchVocab(Model model, @PathVariable("search") String search,
-                              @RequestParam(defaultValue = "1") int page) {
+            @RequestParam(defaultValue = "1") int page) {
 
         // default value lấy từ kết quả đầu tiên
 
@@ -145,6 +148,6 @@ public class vocabController {
             model.addAttribute("search", search);
         }
         return "client/resultSearchVocab";
-    }	
+    }
 
 }
