@@ -15,8 +15,8 @@ import com.elearning.entities.TestLogs;
 import com.elearning.request.BaseReq;
 import com.elearning.service.TestLogService;
 
-@Controller
 @CrossOrigin
+@Controller
 @RequestMapping("api/testlogs")
 public class TestLogsApi {
 	@Autowired

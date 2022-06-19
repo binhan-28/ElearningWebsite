@@ -22,8 +22,8 @@ import com.elearning.service.CourseService;
 import com.elearning.service.LessonService;
 import com.elearning.service.NguoiDungService;
 
-@Controller
 @CrossOrigin
+@Controller
 @RequestMapping("/course")
 public class courseController {
 	@Autowired
